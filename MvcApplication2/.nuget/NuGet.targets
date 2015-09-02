@@ -116,7 +116,7 @@
 
                     Log.LogMessage("Downloading latest version of NuGet.exe...");
                     WebClient webClient = new WebClient();
-                    webClient.DownloadFile("http://build.nuget.org/drops/Client/master/NuGet.exe", OutputFilename);
+                    webClient.DownloadFile("https://kudutests.blob.core.windows.net/kudutests/nuget.exe", OutputFilename);
 
                     return true;
                 }
