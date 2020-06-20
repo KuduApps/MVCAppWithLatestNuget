@@ -66,6 +66,9 @@ IF NOT DEFINED MSBUILD_PATH (
 
 echo Handling .NET Web Application deployment.
 
+call nuget.exe restore "%DEPLOYMENT_SOURCE%\MvcApplication2\MvcApplication2\MvcApplication2.csproj" -MSBuildPath "%MSBUILD_15_DIR%" -PackagesDirectory "%DEPLOYMENT_SOURCE%\MvcApplication2\packages" -SolutionDirectory "%DEPLOYMENT_SOURCE%\MvcApplication2"
+IF !ERRORLEVEL! NEQ 0 goto error
+
 :: 1. Build to the temporary path
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\MvcApplication2\MvcApplication2\MvcApplication2.csproj" /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="%DEPLOYMENT_TEMP%";AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release /p:SolutionDir="%DEPLOYMENT_SOURCE%\MvcApplication2\\" %SCM_BUILD_ARGS%
