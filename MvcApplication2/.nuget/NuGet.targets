@@ -113,15 +113,15 @@
                 <![CDATA[
                 try {
                     OutputFilename = Path.GetFullPath(OutputFilename);
-
-                    Log.LogMessage("Downloading latest version of NuGet.exe...");
-                    WebClient webClient = new WebClient();
-                    webClient.DownloadFile("https://kudutests.blob.core.windows.net/kudutests/nuget.exe", OutputFilename);
-
+                    if (!File.Exists(OutputFilename)) {
+                        Log.LogMessage("Downloading latest version of NuGet.exe...");
+                        WebClient webClient = new WebClient();
+                        webClient.DownloadFile("https://kudutests.blob.core.windows.net/kudutests/nuget.exe", OutputFilename);
+                    }
                     return true;
                 }
                 catch (Exception ex) {
-                    Log.LogErrorFromException(ex);
+                    Log.LogError("Download from https://kudutests.blob.core.windows.net/kudutests/nuget.exe failed with " + ex);
                     return false;
                 }
             ]]>
